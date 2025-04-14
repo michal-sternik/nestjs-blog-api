@@ -17,6 +17,12 @@ export class UserService {
     });
   }
 
+  async getUserById(id: number) {
+    return await this.userRepository.findOne({
+      where: { id },
+    });
+  }
+
   async getUserByEmailOrUsername(email: string, username: string) {
     return await this.userRepository.findOne({
       where: [{ username }, { email }],

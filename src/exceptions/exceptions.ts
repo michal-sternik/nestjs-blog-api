@@ -17,7 +17,7 @@ export class DuplicateEmailException extends HttpException {
 
 export class UserNotFoundException extends HttpException {
   constructor(prop: string) {
-    super(`User with: '${prop}' already exists.`, HttpStatus.NOT_FOUND);
+    super(`User with: '${prop}' not found.`, HttpStatus.NOT_FOUND);
   }
 }
 

@@ -11,10 +11,15 @@ import {
 } from 'src/exceptions/exceptions';
 import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
+import { JwtService } from '@nestjs/jwt';
+import { AuthJwtPayload } from './types/jwtPayload';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   async register(registerDto: RegisterDto) {
     const checkExistingUser = await this.userService.getUserByEmailOrUsername(
@@ -44,5 +49,17 @@ export class AuthService {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) throw new WrongPasswordException();
     return { id: user.id };
+  }
+
+  login(userId: number) {
+    const payload: AuthJwtPayload = { sub: userId };
+    const accessToken = this.jwtService.sign(payload);
+    return accessToken;
+  }
+
+  async validateJwtUser(userId: number) {
+    const user = await this.userService.getUserById(userId);
+    if (!user) throw new UserNotFoundException(userId.toString());
+    return user.id;
   }
 }
