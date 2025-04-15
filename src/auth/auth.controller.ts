@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -17,9 +16,6 @@ import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
-  ApiOkResponse,
-  ApiBearerAuth,
-  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { LoginDto } from './dtos/login.dto';
 
@@ -52,25 +48,5 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   login(@Req() request: { user: { id: number } }) {
     return this.authService.login(request.user.id);
-  }
-
-  @ApiOkResponse({
-    description: 'User profile loaded successfully',
-    schema: {
-      example: 1,
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Invalid or not provided access token',
-  })
-  @ApiBadRequestResponse({
-    description: 'Bad Request – invalid payload (missing/invalid fields)',
-  })
-  @ApiOperation({ summary: 'Protected route - Returns userId' })
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
-  @Get('profile')
-  getProfile(@Req() request: { user: { id: number } }) {
-    return request.user.id;
   }
 }

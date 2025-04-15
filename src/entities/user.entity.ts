@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Post } from './post.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 

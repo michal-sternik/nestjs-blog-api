@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RegisterDto } from 'src/auth/dtos/register.dto';
 import { User } from 'src/entities/user.entity';
+import { UserNotFoundException } from 'src/exceptions/exceptions';
 import { Repository } from 'typeorm';
+import { SafeUserDto } from './types/safeuser.dto';
+import { PostDto } from 'src/post/dtos/post.dto';
 
 @Injectable()
 export class UserService {
@@ -17,10 +20,29 @@ export class UserService {
     });
   }
 
-  async getUserById(id: number) {
-    return await this.userRepository.findOne({
+  async getUserById(id: number): Promise<SafeUserDto> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['posts'],
+    });
+    if (!user) {
+      throw new UserNotFoundException(id.toString());
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...safeUser } = user;
+    return safeUser;
+  }
+
+  async getUserByIdWithoutPosts(id: number): Promise<SafeUserDto> {
+    const user = await this.userRepository.findOne({
       where: { id },
     });
+    if (!user) {
+      throw new UserNotFoundException(id.toString());
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...safeUser } = user;
+    return safeUser;
   }
 
   async getUserByEmailOrUsername(email: string, username: string) {
@@ -32,5 +54,16 @@ export class UserService {
     const newUser = this.userRepository.create(registerDtoWithHashedPassword);
     await this.userRepository.save(newUser);
     return newUser;
+  }
+
+  async getUserPosts(id: number): Promise<PostDto[]> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['posts'],
+    });
+    if (!user) {
+      throw new UserNotFoundException(id.toString());
+    }
+    return user.posts;
   }
 }

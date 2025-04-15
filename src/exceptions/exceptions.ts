@@ -26,3 +26,18 @@ export class WrongPasswordException extends HttpException {
     super('Wrong password provided', HttpStatus.UNAUTHORIZED);
   }
 }
+
+export class PostNotFoundException extends HttpException {
+  constructor(prop: number) {
+    super(`Post with id: '${prop}' not found.`, HttpStatus.NOT_FOUND);
+  }
+}
+
+export class WrongUserAccessException extends HttpException {
+  constructor(userId: number, postId: number) {
+    super(
+      `User with id: '${userId}' cannot interact post with id: ${postId}. Wrong access.`,
+      HttpStatus.FORBIDDEN,
+    );
+  }
+}
