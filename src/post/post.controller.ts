@@ -23,8 +23,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { EditPostDto } from './dtos/editPost.dto';
-import { SafeUserDto } from 'src/user/types/safeuser.dto';
-import { PostDto } from './dtos/post.dto';
 import { Post as PostEntity } from './../entities/post.entity';
 import { PostResponseDto } from './dtos/postresponse.dto';
 
