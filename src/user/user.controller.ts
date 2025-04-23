@@ -49,7 +49,7 @@ export class UserController {
     summary:
       'Protected route - Returns logged user posts (id taken from token)',
   })
-  @Get(':id/posts')
+  @Get('posts')
   async getUserPosts(@Req() request: { user: { id: number } }) {
     return await this.userService.getUserPosts(request.user.id);
   }
