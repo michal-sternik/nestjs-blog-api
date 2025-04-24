@@ -187,7 +187,7 @@ describe('UserService', () => {
     });
 
     it('should throw UserNotFoundException if user is not found', async () => {
-      const userId = 999; //nieistniejący ID
+      const userId = 999; //nieistniejący id
       mockUserRepository.findOne.mockResolvedValue(null);
 
       await expect(service.getUserPosts(userId)).rejects.toThrow(

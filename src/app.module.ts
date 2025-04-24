@@ -24,11 +24,3 @@ import { PostModule } from './post/post.module';
   providers: [AppService],
 })
 export class AppModule {}
-
-// useFactory: (config: ConfigService): PostgresConnectionOptions => {
-//   const dbConfig = config.get<PostgresConnectionOptions>('database');
-//   if (!dbConfig) {
-//     throw new Error('Database configuration is wrong!');
-//   }
-//   return dbConfig;
-// },
