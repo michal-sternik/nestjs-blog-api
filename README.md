@@ -13,7 +13,6 @@ This is a RESTful blog API backend built using NestJS and TypeScript. It provide
 - Role-based access structure (secure endpoints)  
 - CRUD operations for blog posts  
 - User and post data validation using DTOs  
-- Modular code organization for scalability  
 - Swagger documentation for easy API testing  
 
 ## Entities
