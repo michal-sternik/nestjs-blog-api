@@ -28,3 +28,35 @@ Authentication is handled using JWT tokens. Users must log in to receive a token
 
 You can access the interactive Swagger documentation to test and explore all endpoints here:  
 **https://nestjs-blog-api-5tf5.onrender.com/api**
+
+## How to run locally with Docker
+
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/nestjs-blog-api.git
+cd nestjs-blog-api
+```
+
+### 2. Create your `.env` file
+
+Copy the example environment config:
+
+```bash
+cp .env.example .env
+```
+
+Then open `.env` and update the values if needed
+
+
+### 3. Run the app
+
+```bash
+docker-compose up --build
+```
+
+### 4. Visit the API
+
+Once the app is running, open:  
+**http://localhost:3000/api** — Swagger Api
